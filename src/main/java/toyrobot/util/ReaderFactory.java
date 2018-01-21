@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class ReaderFactory {
 
-  public static Reader getReader(String[] args) {
+  public Reader getReader(String[] args) {
     return Optional.ofNullable(args)
         .filter(ar -> ar.length > 0)
         .map(ar -> ar[0])
