@@ -1,18 +1,23 @@
 package toyrobot;
 
-import toyrobot.util.ReaderFactory;
+import toyrobot.util.InputReader;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public class Application {
 
-  private ReaderFactory readerFactory;
+  private InputReader inputReader;
 
-  public Application(ReaderFactory readerFactory) {
-    this.readerFactory = readerFactory;
+  public Application(InputReader readerFactory) {
+    this.inputReader = readerFactory;
   }
 
   public void start(String[] args) {
-    Optional.ofNullable(args).map(readerFactory::getReader);
+    try {
+      inputReader.readFile(args);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
