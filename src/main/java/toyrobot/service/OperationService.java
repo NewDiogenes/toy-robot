@@ -59,4 +59,34 @@ public class OperationService {
         .map(x -> x += angle)
         .ifPresent(tr::setFacing);
   }
+
+  public Consumer<ToyRobot> move() {
+    return tr -> Optional.ofNullable(tr)
+        .map(ToyRobot::getFacing)
+        .map(Math::toRadians)
+        .flatMap(r -> allOf(moveX(r), moveY(r)))
+        .ifPresent(f -> f.accept(tr));
+  }
+
+  private Consumer<ToyRobot> moveX(double radians) {
+    return tr -> Optional.ofNullable(tr)
+        .map(ToyRobot::getXposition)
+        .map(x -> x += (int) Math.sin(radians))
+        .flatMap(this::trimPosition)
+        .ifPresent(tr::setXposition);
+  }
+
+  private Consumer<ToyRobot> moveY(double radians) {
+    return tr -> Optional.ofNullable(tr)
+        .map(ToyRobot::getYposition)
+        .map(y -> y += (int) Math.cos(radians))
+        .flatMap(this::trimPosition)
+        .ifPresent(tr::setYposition);
+  }
+
+  private Optional<Integer> trimPosition(int position) {
+    return Optional.of(position)
+        .map(p -> Math.max(p, 0))
+        .map(p -> Math.min(p, tableSize));
+  }
 }
