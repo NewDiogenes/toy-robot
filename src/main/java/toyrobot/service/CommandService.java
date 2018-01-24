@@ -1,6 +1,6 @@
 package toyrobot.service;
 
-import toyrobot.model.Command;
+import toyrobot.domain.Command;
 
 import java.util.Map;
 import java.util.Optional;

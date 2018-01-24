@@ -3,8 +3,12 @@ package toyrobot.model;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import toyrobot.domain.Command;
+import toyrobot.domain.InputParser;
+import toyrobot.domain.InputValidator;
 
-import static org.junit.Assert.*;
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -51,6 +55,7 @@ public class CommandTest {
   @Test
   public void givenTheValidatorReturnsTrue_Command_shouldCallTheParser() {
     when(inputValidator.test(any())).thenReturn(true);
+    when(inputParser.apply(any())).thenReturn(Optional.empty());
     command.apply(cmd);
     verify(inputParser).apply(eq(cmd));
   }

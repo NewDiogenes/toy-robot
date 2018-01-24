@@ -1,6 +1,7 @@
 package toyrobot.model;
 
 import org.junit.Test;
+import toyrobot.domain.InputValidator;
 
 import static org.junit.Assert.*;
 

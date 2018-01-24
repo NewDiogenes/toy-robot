@@ -1,4 +1,4 @@
-package toyrobot.model;
+package toyrobot.domain;
 
 
 import org.apache.commons.lang3.StringUtils;

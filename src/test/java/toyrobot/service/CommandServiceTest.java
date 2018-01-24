@@ -3,7 +3,7 @@ package toyrobot.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import toyrobot.model.Command;
+import toyrobot.domain.Command;
 
 import java.util.HashMap;
 import java.util.Map;
