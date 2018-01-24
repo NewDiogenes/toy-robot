@@ -31,7 +31,7 @@ public class InputReaderTest {
   }
 
   @Test
-  public void whenAnArgumentThatIsAFileName_getReader_shouldReturnFIleCOntentsAsStream() throws IOException {
+  public void whenAnArgumentThatIsAFileName_getReader_shouldReturnFIleContentsAsStream() throws IOException {
     String[] args = {TEST_DATA};
     Stream<String> expectedReturn = Stream.of("place 0 0 north", "move", "left", "right", "report");
     assertArrayEquals(expectedReturn.toArray(), inputReader.readFile(args).toArray());
