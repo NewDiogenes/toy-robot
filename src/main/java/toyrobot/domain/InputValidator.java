@@ -29,6 +29,10 @@ public interface InputValidator extends Predicate<String> {
     return matchString("left");
   }
 
+  static InputValidator move() {
+    return matchString("move");
+  }
+
   static InputValidator matchString(String match) {
     return in -> Optional.ofNullable(in)
         .filter(i -> i.equals(match))

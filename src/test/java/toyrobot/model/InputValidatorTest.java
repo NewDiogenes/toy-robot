@@ -86,4 +86,16 @@ public class InputValidatorTest {
     assertFalse(InputValidator.left().test(input));
   }
 
+  @Test
+  public void givenAMoveCommand_move_shouldReturnTrue() {
+    input = "move";
+    assertTrue(InputValidator.move().test(input));
+  }
+
+  @Test
+  public void givenACommandOtherThanMove_move_shouldReturnFalse() {
+    input = "report" ;
+    assertFalse(InputValidator.move().test(input));
+  }
+
 }
