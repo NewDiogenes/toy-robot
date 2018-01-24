@@ -22,8 +22,16 @@ public interface InputValidator extends Predicate<String> {
   }
 
   static InputValidator right() {
+    return matchString("right");
+  }
+
+  static InputValidator left() {
+    return matchString("left");
+  }
+
+  static InputValidator matchString(String match) {
     return in -> Optional.ofNullable(in)
-        .filter(i -> i.equals("right"))
+        .filter(i -> i.equals(match))
         .isPresent();
   }
 }
