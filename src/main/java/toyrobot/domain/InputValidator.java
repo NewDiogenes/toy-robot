@@ -20,4 +20,10 @@ public interface InputValidator extends Predicate<String> {
             .contains(i[3].toLowerCase()))
         .isPresent();
   }
+
+  static InputValidator right() {
+    return in -> Optional.ofNullable(in)
+        .filter(i -> i.equals("right"))
+        .isPresent();
+  }
 }

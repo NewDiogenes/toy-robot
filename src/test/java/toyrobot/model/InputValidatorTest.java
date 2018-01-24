@@ -61,4 +61,11 @@ public class InputValidatorTest {
     input = "place 1 1 nowhere";
     assertFalse(InputValidator.place().test(input));
   }
+
+  @Test
+  public void givenARightCommand_right_shouldReturnTrue() {
+    input = "right";
+    assertTrue(InputValidator.right().test(input));
+  }
+
 }
