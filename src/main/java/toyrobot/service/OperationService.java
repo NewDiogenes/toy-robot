@@ -47,9 +47,17 @@ public class OperationService {
   }
 
   public Consumer<ToyRobot> right() {
+    return rotate(TURN_ANGLE);
+  }
+
+  public Consumer<ToyRobot> left() {
+    return rotate(-TURN_ANGLE);
+  }
+
+  public Consumer<ToyRobot> rotate(int angle) {
     return tr -> Optional.ofNullable(tr)
         .map(ToyRobot::getFacing)
-        .map(x -> x += TURN_ANGLE)
+        .map(x -> x += angle)
         .ifPresent(tr::setFacing);
   }
 }

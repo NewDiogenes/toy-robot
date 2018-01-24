@@ -53,9 +53,16 @@ public class OperationServiceTest {
   }
 
   @Test
-  public void right_shouldRotateClockWise() {
+  public void right_shouldRotateToyRobotClockWise() {
     toyRobot.setFacing(Direction.EAST.getAngle());
     operationService.right().accept(toyRobot);
     assertEquals(Direction.SOUTH.getAngle(), toyRobot.getFacing());
+  }
+
+  @Test
+  public void left_shouldRotateToyRobotCounterClockWise() {
+    toyRobot.setFacing(Direction.EAST.getAngle());
+    operationService.left().accept(toyRobot);
+    assertEquals(Direction.NORTH.getAngle(), toyRobot.getFacing());
   }
 }
