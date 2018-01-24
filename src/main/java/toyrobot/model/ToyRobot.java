@@ -3,7 +3,7 @@ package toyrobot.model;
 public class ToyRobot {
   private int xposition;
   private int yposition;
-  private Direction facing;
+  private int facing;
 
   public int getXposition() {
     return xposition;
@@ -21,11 +21,11 @@ public class ToyRobot {
     this.yposition = yposition;
   }
 
-  public Direction getFacing() {
+  public int getFacing() {
     return facing;
   }
 
-  public void setFacing(Direction facing) {
+  public void setFacing(int facing) {
     this.facing = facing;
   }
 }

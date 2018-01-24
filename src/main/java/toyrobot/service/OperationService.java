@@ -12,6 +12,7 @@ import static org.apache.commons.lang3.math.NumberUtils.min;
 public class OperationService {
 
   private int tableSize;
+  private static final int TURN_ANGLE = 90;
 
   public OperationService(int tableSize) {
 
@@ -38,10 +39,17 @@ public class OperationService {
 
   private Consumer<ToyRobot> setFacing(Direction facing) {
     return tr -> Optional.ofNullable(tr)
-        .ifPresent(t -> t.setFacing(facing));
+        .ifPresent(t -> t.setFacing(facing.getAngle()));
   }
 
   private Optional<Consumer<ToyRobot>> allOf(Consumer<ToyRobot>... operations) {
     return Arrays.stream(operations).reduce(Consumer::andThen);
+  }
+
+  public Consumer<ToyRobot> right() {
+    return tr -> Optional.ofNullable(tr)
+        .map(ToyRobot::getFacing)
+        .map(x -> x += TURN_ANGLE)
+        .ifPresent(tr::setFacing);
   }
 }

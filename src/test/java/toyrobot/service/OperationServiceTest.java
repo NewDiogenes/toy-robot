@@ -35,7 +35,7 @@ public class OperationServiceTest {
   @Test
   public void givenAFacingDirection_place_shouldSetTheRobotsFacingDirection() {
     operationService.place(0, 0, Direction.EAST).accept(toyRobot);
-    assertEquals(Direction.EAST, toyRobot.getFacing());
+    assertEquals(Direction.EAST.getAngle(), toyRobot.getFacing());
   }
 
   @Test
@@ -50,5 +50,12 @@ public class OperationServiceTest {
     int offTable = tableSize + 1;
     operationService.place(0, offTable, Direction.EAST).accept(toyRobot);
     assertNotEquals(offTable, toyRobot.getXposition());
+  }
+
+  @Test
+  public void right_shouldRotateClockWise() {
+    toyRobot.setFacing(Direction.EAST.getAngle());
+    operationService.right().accept(toyRobot);
+    assertEquals(Direction.SOUTH.getAngle(), toyRobot.getFacing());
   }
 }

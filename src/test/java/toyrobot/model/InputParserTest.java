@@ -14,6 +14,7 @@ public class InputParserTest {
 
   @Mock
   OperationService operationService;
+  String input;
 
   @Before
   public void setUp() {
@@ -22,25 +23,25 @@ public class InputParserTest {
 
   @Test
   public void givenAValidPlaceCommandFacingNorth_place_shouldGeneratePlaceOperationFromOperationService() {
-    String input = "place 0 0 north";
+    input = "place 0 0 north";
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.NORTH));
   }
   @Test
   public void givenAValidPlaceCommandFacingEast_place_shouldGeneratePlaceOperationFromOperationService() {
-    String input = "place 0 0 east";
+    input = "place 0 0 east";
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.EAST));
   }
   @Test
   public void givenAValidPlaceCommandFacingSouth_place_shouldGeneratePlaceOperationFromOperationService() {
-    String input = "place 0 0 south";
+    input = "place 0 0 south";
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.SOUTH));
   }
   @Test
   public void givenAValidPlaceCommandFacingWest_place_shouldGeneratePlaceOperationFromOperationService() {
-    String input = "place 0 0 west";
+    input = "place 0 0 west";
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.WEST));
   }
