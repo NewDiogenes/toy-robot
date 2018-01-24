@@ -27,18 +27,21 @@ public class InputParserTest {
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.NORTH));
   }
+
   @Test
   public void givenAValidPlaceCommandFacingEast_place_shouldGeneratePlaceOperationFromOperationService() {
     input = "place 0 0 east";
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.EAST));
   }
+
   @Test
   public void givenAValidPlaceCommandFacingSouth_place_shouldGeneratePlaceOperationFromOperationService() {
     input = "place 0 0 south";
     InputParser.place(operationService).apply(input);
     verify(operationService).place(eq(0), eq(0), eq(Direction.SOUTH));
   }
+
   @Test
   public void givenAValidPlaceCommandFacingWest_place_shouldGeneratePlaceOperationFromOperationService() {
     input = "place 0 0 west";

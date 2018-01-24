@@ -25,7 +25,7 @@ public class ApplicationTest {
   }
 
   @Test
-  public void start_shouldPassArgsToInputReader() throws IOException{
+  public void start_shouldPassArgsToInputReader() throws IOException {
     String[] args = {"test"};
     application.start(args);
     verify(inputReader).readFile(eq(args));

@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 public interface Command extends Function<String, Optional<Consumer<ToyRobot>>> {
 
-  static Command make(InputValidator inputValidator, InputParser inputParser){
+  static Command make(InputValidator inputValidator, InputParser inputParser) {
     return in -> Optional.ofNullable(in)
         .filter(inputValidator)
         .flatMap(inputParser);

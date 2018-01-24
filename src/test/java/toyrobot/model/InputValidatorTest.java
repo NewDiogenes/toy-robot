@@ -3,7 +3,8 @@ package toyrobot.model;
 import org.junit.Test;
 import toyrobot.domain.InputValidator;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class InputValidatorTest {
   private String input;
@@ -70,7 +71,7 @@ public class InputValidatorTest {
 
   @Test
   public void givenACommandOtherThanRight_right_shouldReturnFalse() {
-    input = "move" ;
+    input = "move";
     assertFalse(InputValidator.right().test(input));
   }
 
@@ -82,7 +83,7 @@ public class InputValidatorTest {
 
   @Test
   public void givenACommandOtherThanLeft_left_shouldReturnFalse() {
-    input = "move" ;
+    input = "move";
     assertFalse(InputValidator.left().test(input));
   }
 
@@ -94,7 +95,7 @@ public class InputValidatorTest {
 
   @Test
   public void givenACommandOtherThanMove_move_shouldReturnFalse() {
-    input = "report" ;
+    input = "report";
     assertFalse(InputValidator.move().test(input));
   }
 

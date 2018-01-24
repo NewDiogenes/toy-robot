@@ -25,7 +25,7 @@ public class InputReaderTest {
   }
 
   @Test(expected = IOException.class)
-  public void whenAnArgumentThatIsNotAFileName_getReader_shouldThrowIOException() throws IOException {
+  public void whenAnArgumentThatIsNotAFileName_getReader_shouldThrowException() throws IOException {
     String[] args = {"notAFile"};
     inputReader.readFile(args);
   }

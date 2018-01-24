@@ -1,9 +1,8 @@
 package toyrobot;
 
+import java.io.IOException;
 import toyrobot.util.InputReader;
 
-import java.io.IOException;
-import java.util.Optional;
 
 public class Application {
 

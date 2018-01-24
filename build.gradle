@@ -15,3 +15,8 @@ dependencies {
   testCompile group: 'org.mockito', name: 'mockito-core', version: '2.+'
   compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.+'
 }
+
+checkstyle {
+  configFile = new File(rootDir, "checkstyle.xml")
+  toolVersion = "8.7"
+}

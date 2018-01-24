@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class CommandServiceTest {
@@ -20,7 +20,7 @@ public class CommandServiceTest {
   private CommandService commandService;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     initMocks(this);
     Map<String, Command> commands = new HashMap<>();
     commands.put(input, command);

@@ -1,13 +1,12 @@
 package toyrobot.service;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import toyrobot.model.Direction;
 import toyrobot.model.ToyRobot;
 
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
-
-import static org.apache.commons.lang3.math.NumberUtils.min;
 
 public class OperationService {
 
@@ -29,12 +28,12 @@ public class OperationService {
 
   private Consumer<ToyRobot> setXposition(int xposition) {
     return tr -> Optional.ofNullable(tr)
-        .ifPresent(t -> t.setXposition(min(xposition, tableSize)));
+        .ifPresent(t -> t.setXposition(NumberUtils.min(xposition, tableSize)));
   }
 
   private Consumer<ToyRobot> setYposition(int yposition) {
     return tr -> Optional.ofNullable(tr)
-        .ifPresent(t -> t.setYposition(min(yposition, tableSize)));
+        .ifPresent(t -> t.setYposition(NumberUtils.min(yposition, tableSize)));
   }
 
   private Consumer<ToyRobot> setFacing(Direction facing) {
