@@ -13,6 +13,6 @@ public class InputReader {
         .filter(ar -> ar.length > 0)
         .map(ar -> ar[0])
         .map(Paths::get)
-        .get());
+        .orElseThrow(() -> new IOException("Unable to read file")));
   }
 }

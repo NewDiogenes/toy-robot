@@ -53,7 +53,7 @@ public class OperationService {
     return rotate(-TURN_ANGLE);
   }
 
-  public Consumer<ToyRobot> rotate(int angle) {
+  private Consumer<ToyRobot> rotate(int angle) {
     return tr -> Optional.ofNullable(tr)
         .map(ToyRobot::getFacing)
         .map(x -> x += angle)
@@ -88,5 +88,12 @@ public class OperationService {
     return Optional.of(position)
         .map(p -> Math.max(p, 0))
         .map(p -> Math.min(p, tableSize));
+  }
+
+  public Consumer<ToyRobot> report() {
+    return tr -> Optional.ofNullable(tr)
+        .map(t -> String.format("%d, %d, %s",
+            t.getXposition(), t.getYposition(), Direction.getDirection(t.getFacing())))
+        .ifPresent(System.out::println);
   }
 }

@@ -19,7 +19,7 @@ public class InputReaderTest {
     inputReader = new InputReader();
   }
 
-  @Test(expected = NoSuchElementException.class)
+  @Test(expected = IOException.class)
   public void whenGivenAnEmptyArray_getReader_shouldThrowNoSuchElementException() throws IOException {
     inputReader.readFile(new String[0]);
   }
