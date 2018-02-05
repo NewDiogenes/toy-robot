@@ -7,11 +7,11 @@ import toyrobot.model.ToyRobot;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class OperationService {
 
   private int tableSize;
-  private static final int TURN_ANGLE = 90;
 
   public OperationService(int tableSize) {
 
@@ -27,11 +27,11 @@ public class OperationService {
   }
 
   public Consumer<ToyRobot> right() {
-    return rotate(TURN_ANGLE);
+    return rotate(Direction::rotateRight);
   }
 
   public Consumer<ToyRobot> left() {
-    return rotate(-TURN_ANGLE);
+    return rotate(Direction::rotateLeft);
   }
 
   public Consumer<ToyRobot> move() {
@@ -68,10 +68,10 @@ public class OperationService {
     return Arrays.stream(operations).reduce(Consumer::andThen);
   }
 
-  private Consumer<ToyRobot> rotate(int angle) {
+  private Consumer<ToyRobot> rotate(Function<Integer, Integer> rotatorFunction) {
     return tr -> Optional.ofNullable(tr)
         .map(ToyRobot::getFacing)
-        .map(x -> x += angle)
+        .map(rotatorFunction)
         .ifPresent(tr::setFacing);
   }
 

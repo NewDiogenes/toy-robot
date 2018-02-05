@@ -9,7 +9,7 @@ public enum Direction {
   WEST(270);
 
   private int angle;
-  private static final int DIRECTION_ANGLE = 90;
+  public static final Integer ROTATION_ANGLE = 90;
   private static final int FULL_CIRCLE = 360;
 
   Direction(int direction) {
@@ -24,9 +24,21 @@ public enum Direction {
     return Optional.of(facing)
         .map(f -> f + FULL_CIRCLE)
         .map(f -> f % FULL_CIRCLE)
-        .filter(f -> f % DIRECTION_ANGLE == 0)
-        .map(f -> f / DIRECTION_ANGLE)
+        .filter(f -> f % ROTATION_ANGLE == 0)
+        .map(f -> f / ROTATION_ANGLE)
         .map(f -> Direction.values()[f])
         .orElseThrow(() -> new IllegalArgumentException("Could not map the angle to a direction."));
+  }
+
+  public static Integer rotateRight(Integer angle) {
+    return Optional.ofNullable(angle)
+        .map(f -> f + ROTATION_ANGLE)
+        .orElseThrow(() -> new IllegalArgumentException("Angle must not be null"));
+  }
+
+  public static Integer rotateLeft(Integer angle) {
+    return Optional.ofNullable(angle)
+        .map(f -> f - ROTATION_ANGLE)
+        .orElseThrow(() -> new IllegalArgumentException("Angle must not be null"));
   }
 }

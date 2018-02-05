@@ -47,4 +47,26 @@ public class DirectionTest {
     int angle = -90;
     assertEquals(Direction.WEST, Direction.getDirection(angle));
   }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void givenANullAngle_rotateRight_shouldThrowIllegalArgumentException() {
+    Direction.rotateRight(null);
+  }
+
+  @Test
+  public void givenANonNullValue_rotateRight_shouldReturnTheRotatedAngle() {
+    Integer angle = 180;
+    assertEquals(angle + Direction.ROTATION_ANGLE, Direction.rotateRight(angle).intValue());
+  }
+
+  @Test(expected = IllegalArgumentException.class)
+  public void givenANullAngle_rotateLeft_shouldThrowIllegalArgumentException() {
+    Direction.rotateRight(null);
+  }
+
+  @Test
+  public void givenANonNullValue_rotateLeft_shouldReturnTheRotatedAngle() {
+    Integer angle = 180;
+    assertEquals(angle - Direction.ROTATION_ANGLE, Direction.rotateLeft(angle).intValue());
+  }
 }
