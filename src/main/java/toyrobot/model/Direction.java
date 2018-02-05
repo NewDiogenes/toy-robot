@@ -27,6 +27,6 @@ public enum Direction {
         .filter(f -> f % DIRECTION_ANGLE == 0)
         .map(f -> f / DIRECTION_ANGLE)
         .map(f -> Direction.values()[f])
-        .orElseThrow(() -> new RuntimeException("Could not map the angle to a direction."));
+        .orElseThrow(() -> new IllegalArgumentException("Could not map the angle to a direction."));
   }
 }

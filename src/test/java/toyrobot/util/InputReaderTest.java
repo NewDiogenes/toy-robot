@@ -4,11 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 public class InputReaderTest {
   private static final String TEST_DATA = "src/test/resources/testdata.txt";
@@ -19,8 +17,8 @@ public class InputReaderTest {
     inputReader = new InputReader();
   }
 
-  @Test(expected = IOException.class)
-  public void whenGivenAnEmptyArray_getReader_shouldThrowNoSuchElementException() throws IOException {
+  @Test(expected = IllegalArgumentException.class)
+  public void whenGivenAnEmptyArray_getReader_shouldThrowIllegalArgumentException() throws IOException {
     inputReader.readFile(new String[0]);
   }
 

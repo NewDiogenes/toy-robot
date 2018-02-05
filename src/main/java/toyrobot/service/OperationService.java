@@ -26,6 +26,29 @@ public class OperationService {
         .ifPresent(op -> op.accept(tr));
   }
 
+  public Consumer<ToyRobot> right() {
+    return rotate(TURN_ANGLE);
+  }
+
+  public Consumer<ToyRobot> left() {
+    return rotate(-TURN_ANGLE);
+  }
+
+  public Consumer<ToyRobot> move() {
+    return tr -> Optional.ofNullable(tr)
+        .map(ToyRobot::getFacing)
+        .map(Math::toRadians)
+        .flatMap(r -> allOf(moveX(r), moveY(r)))
+        .ifPresent(f -> f.accept(tr));
+  }
+
+  public Consumer<ToyRobot> report() {
+    return tr -> Optional.ofNullable(tr)
+        .map(t -> String.format("%d, %d, %s",
+            t.getXposition(), t.getYposition(), Direction.getDirection(t.getFacing())))
+        .ifPresent(System.out::println);
+  }
+
   private Consumer<ToyRobot> setXposition(int xposition) {
     return tr -> Optional.ofNullable(tr)
         .ifPresent(t -> t.setXposition(NumberUtils.min(xposition, tableSize)));
@@ -45,27 +68,11 @@ public class OperationService {
     return Arrays.stream(operations).reduce(Consumer::andThen);
   }
 
-  public Consumer<ToyRobot> right() {
-    return rotate(TURN_ANGLE);
-  }
-
-  public Consumer<ToyRobot> left() {
-    return rotate(-TURN_ANGLE);
-  }
-
   private Consumer<ToyRobot> rotate(int angle) {
     return tr -> Optional.ofNullable(tr)
         .map(ToyRobot::getFacing)
         .map(x -> x += angle)
         .ifPresent(tr::setFacing);
-  }
-
-  public Consumer<ToyRobot> move() {
-    return tr -> Optional.ofNullable(tr)
-        .map(ToyRobot::getFacing)
-        .map(Math::toRadians)
-        .flatMap(r -> allOf(moveX(r), moveY(r)))
-        .ifPresent(f -> f.accept(tr));
   }
 
   private Consumer<ToyRobot> moveX(double radians) {
@@ -88,12 +95,5 @@ public class OperationService {
     return Optional.of(position)
         .map(p -> Math.max(p, 0))
         .map(p -> Math.min(p, tableSize));
-  }
-
-  public Consumer<ToyRobot> report() {
-    return tr -> Optional.ofNullable(tr)
-        .map(t -> String.format("%d, %d, %s",
-            t.getXposition(), t.getYposition(), Direction.getDirection(t.getFacing())))
-        .ifPresent(System.out::println);
   }
 }
