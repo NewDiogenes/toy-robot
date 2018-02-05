@@ -1,31 +1,31 @@
 package toyrobot.model;
 
 public class ToyRobot {
-  private int xposition;
-  private int yposition;
-  private int facing;
+  private Integer xposition;
+  private Integer yposition;
+  private Integer facing;
 
-  public int getXposition() {
+  public Integer getXposition() {
     return xposition;
   }
 
-  public void setXposition(int xposition) {
+  public void setXposition(Integer xposition) {
     this.xposition = xposition;
   }
 
-  public int getYposition() {
+  public Integer getYposition() {
     return yposition;
   }
 
-  public void setYposition(int yposition) {
+  public void setYposition(Integer yposition) {
     this.yposition = yposition;
   }
 
-  public int getFacing() {
+  public Integer getFacing() {
     return facing;
   }
 
-  public void setFacing(int facing) {
+  public void setFacing(Integer facing) {
     this.facing = facing;
   }
 }

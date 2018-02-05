@@ -8,19 +8,19 @@ public enum Direction {
   SOUTH(180),
   WEST(270);
 
-  private int angle;
+  private Integer angle;
   public static final Integer ROTATION_ANGLE = 90;
-  private static final int FULL_CIRCLE = 360;
+  private static final Integer FULL_CIRCLE = 360;
 
-  Direction(int direction) {
+  Direction(Integer direction) {
     this.angle = direction;
   }
 
-  public int getAngle() {
+  public Integer getAngle() {
     return angle;
   }
 
-  public static Direction getDirection(int facing) {
+  public static Direction getDirection(Integer facing) {
     return Optional.of(facing)
         .map(f -> f + FULL_CIRCLE)
         .map(f -> f % FULL_CIRCLE)

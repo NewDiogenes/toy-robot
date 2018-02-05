@@ -11,14 +11,14 @@ import java.util.function.Function;
 
 public class OperationService {
 
-  private int tableSize;
+  private Integer tableSize;
 
-  public OperationService(int tableSize) {
+  public OperationService(Integer tableSize) {
 
     this.tableSize = tableSize;
   }
 
-  public Consumer<ToyRobot> place(int xposition, int yposition, Direction facing) {
+  public Consumer<ToyRobot> place(Integer xposition, Integer yposition, Direction facing) {
     return tr -> allOf(
         setXposition(xposition),
         setYposition(yposition),
@@ -49,12 +49,12 @@ public class OperationService {
         .ifPresent(System.out::println);
   }
 
-  private Consumer<ToyRobot> setXposition(int xposition) {
+  private Consumer<ToyRobot> setXposition(Integer xposition) {
     return tr -> Optional.ofNullable(tr)
         .ifPresent(t -> t.setXposition(NumberUtils.min(xposition, tableSize)));
   }
 
-  private Consumer<ToyRobot> setYposition(int yposition) {
+  private Consumer<ToyRobot> setYposition(Integer yposition) {
     return tr -> Optional.ofNullable(tr)
         .ifPresent(t -> t.setYposition(NumberUtils.min(yposition, tableSize)));
   }
@@ -75,7 +75,7 @@ public class OperationService {
         .ifPresent(tr::setFacing);
   }
 
-  private Consumer<ToyRobot> moveX(double radians) {
+  private Consumer<ToyRobot> moveX(Double radians) {
     return tr -> Optional.ofNullable(tr)
         .map(ToyRobot::getXposition)
         .map(x -> x += (int) Math.sin(radians))
@@ -83,7 +83,7 @@ public class OperationService {
         .ifPresent(tr::setXposition);
   }
 
-  private Consumer<ToyRobot> moveY(double radians) {
+  private Consumer<ToyRobot> moveY(Double radians) {
     return tr -> Optional.ofNullable(tr)
         .map(ToyRobot::getYposition)
         .map(y -> y += (int) Math.cos(radians))
@@ -91,7 +91,7 @@ public class OperationService {
         .ifPresent(tr::setYposition);
   }
 
-  private Optional<Integer> trimPosition(int position) {
+  private Optional<Integer> trimPosition(Integer position) {
     return Optional.of(position)
         .map(p -> Math.max(p, 0))
         .map(p -> Math.min(p, tableSize));
