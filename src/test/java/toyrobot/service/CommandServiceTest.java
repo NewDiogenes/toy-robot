@@ -3,71 +3,67 @@ package toyrobot.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import toyrobot.domain.Command;
+import toyrobot.model.Direction;
+import toyrobot.model.ToyRobot;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class CommandServiceTest {
 
   @Mock
-  private Command command;
+  private Consumer<ToyRobot> mockOperation;
+  @Mock
+  private OperationService operationService;
   private final String input = "testInput";
   private CommandService commandService;
-  private Map<String, Command> commandList;
 
   @Before
   public void setUp() {
     initMocks(this);
-    commandList = new HashMap<>();
-    commandList.put(input, command);
-    commandService = new CommandService();
+    commandService = new CommandService(operationService);
+
   }
 
   @Test
-  public void givenAnInputWithNoCorrespondingCommand_getCommand_shouldReturnEmpty() {
-    assertEquals(Optional.empty(), commandService.getCommand(""));
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void givenServiceDoesNotAlreadyHaveCommandWithName_addCommand_shouldAddANewCommand() {
-    String commandName = "command";
-    commandService.addCommand(commandName, command);
-    assertTrue(commandService.getCommandList().containsKey(commandName));
+  public void givenAPlaceCommand_menu_shouldReturnOperationServicePlace() {
+    String command = "place 0 0 NORTH";
+    when(operationService.place(0, 0, Direction.NORTH)).thenReturn(mockOperation);
+    commandService.menu().apply(command);
+    assertEquals(mockOperation, commandService.menu().apply(command).get());
   }
 
   @Test
-  public void givenAnInputWithACorrespondingCommand_getCommand_shouldReturnTheCommand() {
-    commandService.setCommandList(commandList);
-    assertEquals(command, commandService.getCommand(input).get());
+  public void givenALeftCommand_menu_shouldReturnOperationServiceLeft() {
+    String command = "left";
+    when(operationService.left()).thenReturn(mockOperation);
+    assertEquals(mockOperation, commandService.menu().apply(command).get());
   }
 
   @Test
-  public void givenAnInputWithMultipleCommands_getCommand_shouldReturnTheFirstCommand() {
-    commandService.setCommandList(commandList);
-    assertEquals(command, commandService.getCommand(input + " test2").get());
+  public void givenARightCommand_menu_shouldReturnOperationServiceRight() {
+    String command = "right";
+    when(operationService.right()).thenReturn(mockOperation);
+    assertEquals(mockOperation, commandService.menu().apply(command).get());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void givenCommandNameIsNull_addCommand_shouldThrowIllegalArgumentException() {
-    commandService.addCommand(null, command);
+  @Test
+  public void givenAMoveCommand_menu_shouldReturnOperationServiceMove() {
+    String command = "move";
+    when(operationService.move()).thenReturn(mockOperation);
+    assertEquals(mockOperation, commandService.menu().apply(command).get());
   }
 
-  @Test(expected = IllegalArgumentException.class)
-  public void givenCommandIsNull_addCommand_shouldThrowIllegalArgumentException() {
-    commandService.addCommand("command", null);
+  @Test
+  public void givenAReportCommand_menu_shouldReturnOperationServiceReport() {
+    String command = "report";
+    when(operationService.report()).thenReturn(mockOperation);
+    assertEquals(mockOperation, commandService.menu().apply(command).get());
   }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void givenServiceAlreadyHasCommandWithName_addCommand_shouldThrowIllegalArgumentException() {
-    commandService.addCommand("command", command);
-    commandService.addCommand("command", command);
-  }
-
-
 }

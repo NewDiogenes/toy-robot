@@ -1,39 +1,44 @@
 package toyrobot.service;
 
 import toyrobot.domain.Command;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import toyrobot.domain.InputParser;
+import toyrobot.domain.InputValidator;
 
 public class CommandService {
-  private Map<String, Command> commandList;
+  private OperationService operationService;
 
-  public CommandService() {
-    this.commandList = new HashMap<>();
+  public CommandService(OperationService operationService) {
+    this.operationService = operationService;
   }
 
-  public Optional<Command> getCommand(String command) {
-    return Optional.ofNullable(command)
-        .map(cmd -> cmd.split(" "))
-        .map(cmd -> cmd[0])
-        .map(cmd -> commandList.get(cmd));
+  public Command menu() {
+    return Command.commandMenu(
+        place(),
+        left(),
+        right(),
+        move(),
+        report());
   }
 
-  public void addCommand(String commandName, Command command) {
-    Optional.ofNullable(commandName)
-        .filter(cmd -> Objects.nonNull(command))
-        .filter(commandList::containsKey)
-        .map(cmd -> commandList.put(cmd, command))
-        .orElseThrow(() -> new IllegalArgumentException("Unable able to add new command"));
+  private Command place() {
+    return Command.parsePredicateCommand(InputValidator.place(), InputParser.place(operationService));
   }
 
-  public Map<String, Command> getCommandList() {
-    return commandList;
+  private Command left() {
+    return Command.predicateCommand(InputValidator.left(), operationService.left());
   }
 
-  public void setCommandList(Map<String, Command> commandList) {
-    this.commandList = commandList;
+  private Command right() {
+    return Command.predicateCommand(InputValidator.right(), operationService.right());
   }
+
+  private Command move() {
+    return Command.predicateCommand(InputValidator.move(), operationService.move());
+  }
+
+  private Command report() {
+    return Command.predicateCommand(InputValidator.report(), operationService.report());
+  }
+
+
 }

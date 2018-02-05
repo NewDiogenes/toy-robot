@@ -1,40 +1,36 @@
 package toyrobot;
 
-import java.io.IOException;
-import java.util.stream.Stream;
-
-import toyrobot.domain.Command;
-import toyrobot.domain.InputParser;
-import toyrobot.domain.InputValidator;
+import toyrobot.model.ToyRobot;
 import toyrobot.service.CommandService;
-import toyrobot.service.OperationService;
 import toyrobot.util.InputReader;
+
+import java.io.IOException;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 
 public class Application {
 
   private InputReader inputReader;
   private CommandService commandService;
-  private OperationService operationService;
 
-  public Application(InputReader readerFactory, CommandService commandService, OperationService operationService) {
+  public Application(InputReader readerFactory, CommandService commandService) {
     this.inputReader = readerFactory;
     this.commandService = commandService;
-    this.operationService = operationService;
   }
 
   public void start(String[] args) {
-    commandService.addCommand("place", placeCommand());
     Stream<String> inputStream = Stream.empty();
     try {
       inputStream = inputReader.readFile(args);
     } catch (IOException e) {
       e.printStackTrace();
     }
-    inputStream.forEach(commandService::getCommand);
-  }
-
-  private Command placeCommand() {
-    return Command.make(InputValidator.place(), InputParser.place(operationService));
+    inputStream.map(commandService.menu())
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .reduce(Consumer::andThen)
+        .ifPresent(con -> con.accept(new ToyRobot()));
   }
 }

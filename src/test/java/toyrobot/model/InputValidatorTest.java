@@ -99,4 +99,16 @@ public class InputValidatorTest {
     assertFalse(InputValidator.move().test(input));
   }
 
+  @Test
+  public void givenAReportCommand_report_shouldReturnTrue() {
+    input = "report";
+    assertTrue(InputValidator.report().test(input));
+  }
+
+  @Test
+  public void givenACommandOtherThanReport_report_shouldReturnFalse() {
+    input = "place 0 0 NORTH";
+    assertFalse(InputValidator.report().test(input));
+  }
+
 }
