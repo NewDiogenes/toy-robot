@@ -46,6 +46,7 @@ public class OperationService {
 
   public Consumer<ToyRobot> report() {
     return tr -> Optional.ofNullable(tr)
+        .filter(this::checkIfInitialized)
         .map(t -> String.format("%d, %d, %s",
             t.getXposition(), t.getYposition(), Direction.getDirection(t.getFacing())))
         .ifPresent(System.out::println);
@@ -72,6 +73,7 @@ public class OperationService {
 
   private Consumer<ToyRobot> rotate(Function<Integer, Integer> rotatorFunction) {
     return tr -> Optional.ofNullable(tr)
+        .filter(this::checkIfInitialized)
         .map(ToyRobot::getFacing)
         .map(rotatorFunction)
         .ifPresent(tr::setFacing);

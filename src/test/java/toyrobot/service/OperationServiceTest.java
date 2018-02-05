@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -74,8 +75,9 @@ public class OperationServiceTest {
   }
 
   @Test
-  public void givenFacingIsNotNull_right_shouldRotateToyRobotClockWise() {
+  public void givenToyRobotIsInitialized_right_shouldRotateToyRobotClockWise() {
     toyRobot.setFacing(Direction.EAST.getAngle());
+    setPositions(0,0);
     operationService.right().accept(toyRobot);
     assertEquals(Direction.SOUTH.getAngle(), toyRobot.getFacing());
   }
@@ -89,8 +91,9 @@ public class OperationServiceTest {
   }
 
   @Test
-  public void givenFacingIsNotNull_left_shouldRotateToyRobotCounterClockWise() {
+  public void  givenToyRobotIsInitialized_left_shouldRotateToyRobotCounterClockWise() {
     toyRobot.setFacing(Direction.EAST.getAngle());
+    setPositions(0, 0);
     operationService.left().accept(toyRobot);
     assertEquals(Direction.NORTH.getAngle(), toyRobot.getFacing());
   }
@@ -221,8 +224,8 @@ public class OperationServiceTest {
 
   @Test
   public void givenToyRobotIsUninitialized_report_shouldNotPrintAnything() {
-    operationService.move().accept(toyRobot);
-    verify(printStream, times(0)).println();
+    operationService.report().accept(toyRobot);
+    verify(printStream, times(0)).println(any(String.class));
   }
 
   @Test

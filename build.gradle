@@ -3,6 +3,14 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'checkstyle'
+apply plugin: 'application'
+
+mainClassName = "toyrobot.Main"
+
+run {
+  if(findProperty('file') != null)
+    args findProperty('file')
+}
 
 sourceCompatibility = 1.8
 

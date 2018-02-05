@@ -1,0 +1,25 @@
+move
+left
+right
+report
+place 2 2 NORTH
+report
+move
+report
+move
+report
+move
+report
+move
+report
+left
+left
+move
+report
+right
+move
+report
+place 5 5 EAST
+report
+move
+report

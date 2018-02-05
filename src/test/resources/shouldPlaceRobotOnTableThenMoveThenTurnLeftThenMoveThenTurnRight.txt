@@ -1,0 +1,6 @@
+place 1 2 SOUTH
+move
+left
+move
+right
+report

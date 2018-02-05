@@ -83,14 +83,13 @@ Expected output
 
     3,3,NORTH
 
-Deliverables
+Usage
 ------------
 
-Please provide your source code, and any test code/data you using in
-developing your solution.
+Run tests: 
 
-Please engineer your solution to a standard you consider suitable for
-production. It is not required to provide any graphical output showing the
-movement of the toy robot.
+    ./gradlew clean test
+      
+Run application: 
 
-Please do not put your name in any of the submitted code since this makes it harder for us to review your submission anonymously.
+    ./gradlew clean run -Pfile=example.txt 
