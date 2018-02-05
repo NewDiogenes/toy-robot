@@ -5,6 +5,7 @@ import toyrobot.model.Direction;
 import toyrobot.model.ToyRobot;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -36,6 +37,7 @@ public class OperationService {
 
   public Consumer<ToyRobot> move() {
     return tr -> Optional.ofNullable(tr)
+        .filter(this::checkIfInitialized)
         .map(ToyRobot::getFacing)
         .map(Math::toRadians)
         .flatMap(r -> allOf(moveX(r), moveY(r)))
@@ -95,5 +97,13 @@ public class OperationService {
     return Optional.of(position)
         .map(p -> Math.max(p, 0))
         .map(p -> Math.min(p, tableSize));
+  }
+
+  private boolean checkIfInitialized(ToyRobot toyRobot) {
+    return Optional.ofNullable(toyRobot)
+        .filter(tr -> Objects.nonNull(tr.getXposition()))
+        .filter(tr -> Objects.nonNull(tr.getYposition()))
+        .filter(tr -> Objects.nonNull(tr.getFacing()))
+        .isPresent();
   }
 }

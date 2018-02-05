@@ -8,9 +8,11 @@ import toyrobot.model.ToyRobot;
 
 import java.io.PrintStream;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -64,24 +66,49 @@ public class OperationServiceTest {
   }
 
   @Test
-  public void right_shouldRotateToyRobotClockWise() {
+  public void givenToyRobotIsUninitialized_right_shouldMakeNoChanges() {
+    operationService.right().accept(toyRobot);
+    assertNull(toyRobot.getYposition());
+    assertNull(toyRobot.getXposition());
+    assertNull(toyRobot.getFacing());
+  }
+
+  @Test
+  public void givenFacingIsNotNull_right_shouldRotateToyRobotClockWise() {
     toyRobot.setFacing(Direction.EAST.getAngle());
     operationService.right().accept(toyRobot);
     assertEquals(Direction.SOUTH.getAngle(), toyRobot.getFacing());
   }
 
   @Test
-  public void left_shouldRotateToyRobotCounterClockWise() {
+  public void givenToyRobotIsUninitialized_left_shouldMakeNoChanges() {
+    operationService.left().accept(toyRobot);
+    assertNull(toyRobot.getYposition());
+    assertNull(toyRobot.getXposition());
+    assertNull(toyRobot.getFacing());
+  }
+
+  @Test
+  public void givenFacingIsNotNull_left_shouldRotateToyRobotCounterClockWise() {
     toyRobot.setFacing(Direction.EAST.getAngle());
     operationService.left().accept(toyRobot);
     assertEquals(Direction.NORTH.getAngle(), toyRobot.getFacing());
   }
 
   @Test
+  public void givenToyRobotIsUninitialized_move_shouldMakeNoChanges() {
+    operationService.move().accept(toyRobot);
+    assertNull(toyRobot.getYposition());
+    assertNull(toyRobot.getXposition());
+    assertNull(toyRobot.getFacing());
+  }
+
+  @Test
   public void givenTheRobotIsFacingNorth_move_shouldIncreaseTheYpositionByOne() {
     toyRobot.setFacing(Direction.NORTH.getAngle());
     Integer startYposition = 1;
-    toyRobot.setYposition(startYposition);
+    Integer startXposition = 1;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startYposition + 1, toyRobot.getYposition().intValue());
   }
@@ -90,7 +117,8 @@ public class OperationServiceTest {
   public void givenTheRobotIsFacingNorth_move_shouldNotIncreaseTheXposition() {
     toyRobot.setFacing(Direction.NORTH.getAngle());
     Integer startXposition = 1;
-    toyRobot.setXposition(startXposition);
+    Integer startYposition = 1;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startXposition, toyRobot.getXposition());
   }
@@ -99,7 +127,8 @@ public class OperationServiceTest {
   public void givenTheRobotIsFacingEast_move_shouldIncreaseTheXpositionByOne() {
     toyRobot.setFacing(Direction.EAST.getAngle());
     Integer startXposition = 1;
-    toyRobot.setXposition(startXposition);
+    Integer startYposition = 0;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startXposition + 1, toyRobot.getXposition().intValue());
   }
@@ -108,7 +137,8 @@ public class OperationServiceTest {
   public void givenTheRobotIsFacingEast_move_shouldNotIncreaseTheYposition() {
     toyRobot.setFacing(Direction.EAST.getAngle());
     Integer startYposition = 1;
-    toyRobot.setYposition(startYposition);
+    Integer startXposition = 0;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startYposition, toyRobot.getYposition());
   }
@@ -117,7 +147,8 @@ public class OperationServiceTest {
   public void givenTheRobotIsFacingSouth_move_shouldDecreaseTheYpositionByOne() {
     toyRobot.setFacing(Direction.SOUTH.getAngle());
     Integer startYposition = 1;
-    toyRobot.setYposition(startYposition);
+    Integer startXposition = 1;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startYposition - 1, toyRobot.getYposition().intValue());
   }
@@ -126,16 +157,18 @@ public class OperationServiceTest {
   public void givenTheRobotIsFacingSouth_move_shouldNotDecreaseTheXposition() {
     toyRobot.setFacing(Direction.SOUTH.getAngle());
     Integer startXposition = 1;
-    toyRobot.setXposition(startXposition);
+    Integer startYposition = 0;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startXposition, toyRobot.getXposition());
   }
 
   @Test
-  public void givenTheRobotIsFacingWest_move_shouldDencreaseTheXpositionByOne() {
+  public void givenTheRobotIsFacingWest_move_shouldDecreaseTheXpositionByOne() {
     toyRobot.setFacing(Direction.WEST.getAngle());
     Integer startXposition = 1;
-    toyRobot.setXposition(startXposition);
+    Integer startYposition = 0;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startXposition - 1, toyRobot.getXposition().intValue());
   }
@@ -144,7 +177,8 @@ public class OperationServiceTest {
   public void givenTheRobotIsFacingWest_move_shouldNotDecreaseTheYposition() {
     toyRobot.setFacing(Direction.WEST.getAngle());
     Integer startYposition = 1;
-    toyRobot.setYposition(startYposition);
+    Integer startXposition = 1;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startYposition, toyRobot.getYposition());
   }
@@ -153,7 +187,8 @@ public class OperationServiceTest {
   public void givenTheRobotHasXposition0AndFacesWest_move_shouldNotChangeTheXposition() {
     toyRobot.setFacing(Direction.WEST.getAngle());
     Integer startXposition = 0;
-    toyRobot.setXposition(startXposition);
+    Integer startYposition = 1;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startXposition, toyRobot.getXposition());
   }
@@ -162,7 +197,8 @@ public class OperationServiceTest {
   public void givenTheRobotHasYposition0AndFacesSouth_move_shouldNotChangeTheYposition() {
     toyRobot.setFacing(Direction.SOUTH.getAngle());
     Integer startYposition = 0;
-    toyRobot.setYposition(startYposition);
+    Integer startXposition = 0;
+    setPositions(startXposition, startYposition);
     operationService.move().accept(toyRobot);
     assertEquals(startYposition, toyRobot.getYposition());
   }
@@ -184,11 +220,22 @@ public class OperationServiceTest {
   }
 
   @Test
-  public void givenTheRobotIsOnTheTable_report_shouldPrintTheRobotsCurrentSTateToSystemOut() {
+  public void givenToyRobotIsUninitialized_report_shouldNotPrintAnything() {
+    operationService.move().accept(toyRobot);
+    verify(printStream, times(0)).println();
+  }
+
+  @Test
+  public void givenTheRobotIsOnTheTable_report_shouldPrintTheRobotsCurrentStateToSystemOut() {
     toyRobot.setXposition(3);
     toyRobot.setYposition(2);
     toyRobot.setFacing(Direction.WEST.getAngle());
     operationService.report().accept(toyRobot);
     verify(printStream).println(eq("3, 2, WEST"));
+  }
+
+  private void setPositions(Integer xposition, Integer yposition) {
+    toyRobot.setXposition(xposition);
+    toyRobot.setYposition(yposition);
   }
 }
