@@ -89,4 +89,10 @@ public class CommandTest {
     when(inputValidator.test(any())).thenReturn(true);
     assertEquals(mockConsumer, predicateCommand.apply(cmd).get());
   }
+
+  @Test(expected = IllegalStateException.class)
+  public void givenAnInputMatchesToMoreThanOneCommand_commandMenu_shouldThrowIllegalStateException() {
+    when(inputValidator.test(any())).thenReturn(true);
+    Command.commandMenu(predicateCommand, predicateCommand).apply(cmd);
+  }
 }

@@ -26,6 +26,6 @@ public interface Command extends Function<String, Optional<Consumer<ToyRobot>>> 
         .map(cmd -> cmd.apply(in))
         .filter(Optional::isPresent)
         .map(Optional::get)
-        .findAny();
+        .reduce((cmd1, cmd2) -> {throw new IllegalStateException("Input mapped to more than one command");});
   }
 }
