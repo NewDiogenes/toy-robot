@@ -52,7 +52,7 @@ public class ApplicationTest {
   }
 
   @Test
-  public void givenInputReaderReturnsAStreamOfInput_start_shouldPassEachInputToTheCommandService() {
+  public void givenInputReaderReturnsAStreamOfInput_start_shouldPassEachInputToTheCommandService() throws IOException {
     application.start(args);
     InOrder inOrder = inOrder(mockCommand);
     inputStream.forEach(in -> inOrder.verify(mockCommand).apply(in));

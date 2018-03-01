@@ -20,13 +20,8 @@ public class Application {
     this.commandService = commandService;
   }
 
-  public void start(String[] args) {
-    Stream<String> inputStream = Stream.empty();
-    try {
-      inputStream = inputReader.readFile(args);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public void start(String[] args) throws IOException {
+    Stream<String> inputStream = inputReader.readFile(args);
     inputStream.map(commandService.menu())
         .filter(Optional::isPresent)
         .map(Optional::get)
